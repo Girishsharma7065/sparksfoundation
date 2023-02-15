@@ -1,0 +1,33 @@
+# import libraries
+import pandas as pd
+import matplotlib.pyplot as plt
+from sklearn.linear_model import LinearRegression
+
+# Importing the dataset
+URL = "http://bit.ly/w-data"
+dataset = pd.read_csv(URL)
+X = dataset.iloc[:, :-1].values
+y = dataset.iloc[:, -1].values
+
+# Plotting the distribution of scores
+dataset.plot(x='Hours', y='Scores', style='o')
+plt.title('Hours vs Percentage')
+plt.xlabel('Hours Studied')
+plt.ylabel('Percentage Score')
+plt.show()
+
+# fitting simple linear regression to the training set
+regressor = LinearRegression()
+regressor.fit(X, y)
+
+# Plotting the regression line
+line = regressor.coef_*X+regressor.intercept_
+
+# Plotting for the test data
+plt.scatter(X, y)
+plt.plot(X, line)
+plt.show()
+
+# predict test set rules
+y_pred = regressor.predict([[9.25]])
+print(y_pred)
